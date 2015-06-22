@@ -18,6 +18,10 @@
         <activity
             android:name="net.fenotes.sam.coolweather.activity.WeatherActivity">
         </activity>
+        <service
+            android:name="net.fenotes.sam.coolweather.service.AutoUpdateService"></service>
+        <receiver
+            android:name="net.fenotes.sam.coolweather.receiver.AutoUpdateReceiver"></receiver>
     </application>
 
 </manifest>
