@@ -52,7 +52,7 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
         String countryCode = getIntent().getStringExtra("country_code");
         if (!TextUtils.isEmpty(countryCode)) {
 
-            // query weather when exists coutry code
+            // query weather when exists country code
             publishText.setText("同步中...");
             weatherInfoLayout.setVisibility(View.INVISIBLE);
             cityNameText.setVisibility(View.INVISIBLE);
