@@ -29,8 +29,8 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
     private TextView temp1Text;
     private TextView temp2Text;
     private TextView currentDateText;
-//    private Button switchCity;
-//    private Button refreshWeather;
+    private Button switchCity;
+    private Button refreshWeather;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +46,8 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
         temp1Text = (TextView) findViewById(R.id.temp1);
         temp2Text = (TextView) findViewById(R.id.temp2);
         currentDateText = (TextView) findViewById(R.id.current_date);
-//        switchCity = (Button) findViewById(R.id.switch_city);
-//        refreshWeather = (Button) findViewById(R.id.refresh_weather);
+        switchCity = (Button) findViewById(R.id.switch_city);
+        refreshWeather = (Button) findViewById(R.id.refresh_weather);
         String countryCode = getIntent().getStringExtra("country_code");
         if (!TextUtils.isEmpty(countryCode)) {
 
@@ -60,8 +60,8 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
             showWeather();
         }
 
-//        switchCity.setOnClickListener(this);
-//        refreshWeather.setOnClickListener(this);
+        switchCity.setOnClickListener(this);
+        refreshWeather.setOnClickListener(this);
     }
 
     private void showWeather() {
@@ -71,31 +71,31 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
         temp2Text.setText(prefs.getString("temp2", ""));
         weatherDespText.setText(prefs.getString("weather_desp", ""));
         publishText.setText("今天" + prefs.getString("publish_time", "") + "发布");
-        currentDateText.setText(prefs.getString("current_data", ""));
+        currentDateText.setText(prefs.getString("current_date", ""));
         weatherInfoLayout.setVisibility(View.VISIBLE);
         cityNameText.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.swithc_city:
-//                Intent intent= new Intent(this, ChooseAreaActivity.class);
-//                intent.putExtra("from_weather_activity", true);
-//                startActivity(intent);
-//                finish();
-//                break;
-//            case R.id.refresh_weather:
-//                publishText.setText("同步中...");
-//                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-//                String weatherCode = prefs.getString("weather_code", "");
-//                if (!TextUtils.isEmpty(weatherCode)) {
-//                    queryWeatherInfo(weatherCode);
-//                }
-//                break;
-//            default:
-//                break;
-//        }
+        switch (v.getId()) {
+            case R.id.switch_city:
+                Intent intent= new Intent(this, ChooseAreaActivity.class);
+                intent.putExtra("from_weather_activity", true);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.refresh_weather:
+                publishText.setText("同步中...");
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                String weatherCode = prefs.getString("weather_code", "");
+                if (!TextUtils.isEmpty(weatherCode)) {
+                    queryWeatherInfo(weatherCode);
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     /**
