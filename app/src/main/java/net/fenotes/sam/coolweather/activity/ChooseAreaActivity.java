@@ -2,7 +2,10 @@ package net.fenotes.sam.coolweather.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -52,6 +55,13 @@ public class ChooseAreaActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (prefs.getBoolean("city_selected", false)) {
+            Intent intent = new Intent(this, WeatherActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.choose_area);
         listView = (ListView) findViewById(R.id.list_view);
@@ -68,6 +78,12 @@ public class ChooseAreaActivity extends Activity {
                 } else if (currentLevel == LEVEL_CITY) {
                     selectedCity = cityList.get(index);
                     queryCountries();
+                } else if (currentLevel == LEVEL_COUNTRY) {
+                    String countryCode = countryList.get(index).getCountryCode();
+                    Intent intent = new Intent(ChooseAreaActivity.this, WeatherActivity.class);
+                    intent.putExtra("country_code", countryCode);
+                    startActivity(intent);
+                    finish();
                 }
             }
         });
@@ -90,7 +106,7 @@ public class ChooseAreaActivity extends Activity {
 
             adapter.notifyDataSetChanged();;
             listView.setSelection(0);
-            titleText.setText("China");
+            titleText.setText("中国");
             currentLevel = LEVEL_PROVINCE;
         } else {
             queryFromServer(null, "province");
